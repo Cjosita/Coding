@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coding Yaar | Luxury Design Portfolio</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
+  <style>
+    :root {
+      --primary: #1f3a5f;
+      --secondary: #f4b41a;
+      --bg: #f8fafc;
+      --text: #0f172a;
+      --card: #ffffff;
+      --footer: #111827;
+    }
+
+    body.dark {
+      --bg: #0f172a;
+      --text: #f8fafc;
+      --card: #1e293b;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); transition: 0.3s; overflow-x: hidden; }
+
+    /* HEADER */
+    header { position: fixed; top: 0; width: 100%; background: var(--primary); z-index: 2000; padding: 1rem 0; }
+    .navbar { max-width: 1200px; margin: auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
+    .logo { color: #fff; font-size: 1.5rem; font-weight: 700; text-decoration: none; }
+    .logo span { color: var(--secondary); }
+    .nav-links { list-style: none; display: flex; gap: 2rem; align-items: center; }
+    .nav-links a { color: #fff; text-decoration: none; font-weight: 500; }
+    .hamburger { display: none; color: #fff; font-size: 2rem; cursor: pointer; }
+
+    /* HERO */
+    .hero { height: 70vh; background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1600') center/cover; display: flex; align-items: center; justify-content: center; text-align: center; color: #fff; }
+    
+    /* COUNTER SECTION */
+    .stats-bar { background: var(--secondary); padding: 2rem; text-align: center; color: #000; }
+    .counter { font-size: 3rem; font-weight: 800; display: block; }
+
+    /* CUSTOM MODAL CSS */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center;
+      z-index: 3000;
+    }
+    .modal-content {
+      background: white; padding: 2.5rem; border-radius: 15px; text-align: center;
+      max-width: 400px; width: 90%; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .modal-content h3 { color: var(--primary); margin-bottom: 1rem; }
+    .modal-content p { color: #333; margin-bottom: 1.5rem; }
+    .modal-content button {
+      background: var(--secondary); border: none; padding: 12px 40px; 
+      border-radius: 5px; cursor: pointer; font-weight: 700; color: #000;
+    }
+
+    /* CATALOG */
+    .catalog { padding: 5rem 2rem; max-width: 1200px; margin: auto; }
+    .catalog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+    .card { background: var(--card); border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); position: relative; transition: 0.3s; }
+    .card:hover { transform: translateY(-5px); }
+    .price { position: absolute; top: 10px; right: 10px; background: var(--secondary); padding: 5px 10px; border-radius: 5px; font-weight: bold; }
+    .card img { width: 100%; height: 200px; object-fit: cover; }
+    .card-body { padding: 1.5rem; }
+    .load-more { text-align: center; margin-top: 3rem; }
+    .btn { background: var(--primary); color: #fff; padding: 0.8rem 2rem; border: none; border-radius: 5px; cursor: pointer; font-weight: 600; }
+
+    /* INQUIRY FORM */
+    .inquiry { background: var(--card); padding: 5rem 2rem; }
+    .form-container { max-width: 600px; margin: auto; }
+    input, select, textarea { width: 100%; padding: 1rem; margin-bottom: 1rem; border-radius: 8px; border: 1px solid #ddd; background: var(--bg); color: var(--text); }
+
+    /* FOOTER */
+    footer { background: var(--footer); color: #fff; padding: 4rem 2rem; text-align: center; }
+
+    @media (max-width: 768px) {
+      .hamburger { display: block; }
+      .nav-links { position: fixed; top: 75px; right: -100%; width: 70%; height: 100vh; background: var(--primary); flex-direction: column; padding: 2rem; transition: 0.4s; }
+      .nav-links.active { right: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav class="navbar">
+      <a href="#" class="logo">Coding<span>Yaar</span></a>
+      <div class="hamburger" id="hamburger">☰</div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about" onclick="toggleMenu()">About</a></li>
+        <li><a href="#catalog" onclick="toggleMenu()">Packages</a></li>
+        <li><a href="#inquiry" onclick="toggleMenu()">Inquiry</a></li>
+        <li id="themeToggle" style="cursor:pointer;">🌙</li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Redefining Modern Luxury</h1>
+  </section>
+
+  <div class="stats-bar">
+    <span class="counter" id="count">0</span>
+    <p>Trusted Users Worldwide</p>
+  </div>
+
+  <section class="about" id="about" style="display: flex; justify-content: center; padding: 40px 20px;">
+    <div class="about-img" style="max-width: 800px; width: 100%;">
+      <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" alt="Design Team" style="display: block; width: 100%; height: auto; border-radius: 12px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); object-fit: cover;">
+    </div>
+  </section>
+
+  <section class="catalog" id="catalog">
+    <h2 style="text-align: center; margin: 40px 0;">Design Catalog <div style="width: 100px; height: 4px; background: orange; margin: 10px auto 0;"></div></h2>
+    <div class="catalog-grid" id="grid"></div>
+    <div class="load-more">
+      <button class="btn" id="loadBtn">Load More Designs</button>
+    </div>
+  </section>
+
+  <section class="inquiry" id="inquiry">
+    <div class="form-container">
+      <h2 style="text-align:center; margin-bottom:2rem;">Submit an Inquiry</h2>
+      
+      <form id="inquiryForm" action="send_email.php" method="POST">
+        <input type="text" name="full_name" placeholder="Full Name" required>
+        <input type="email" name="email_address" placeholder="Email Address" required>
+        <select name="project_type" required>
+          <option value="" disabled selected>Project Type</option>
+          <option value="Residential">Residential</option>
+          <option value="Commercial">Commercial</option>
+          <option value="Consultation">Consultation</option>
+        </select>
+        <textarea name="project_details" rows="5" placeholder="Tell us about your project..." required></textarea>
+        <button type="submit" class="btn" style="width:100%; background:var(--secondary); color:#000;">Send Inquiry</button>
+      </form> 
+    </div>
+  </section>
+
+  <div id="customAlert" class="modal-overlay">
+    <div class="modal-content">
+      <h3>CodingYaar says:</h3>
+      <p>Inquiry Received! Our design consultant will email you within 24 hours.</p>
+      <button onclick="closeModal()">OK</button>
+    </div>
+  </div>
+
+  <footer>
+    <div style="text-align: center; font-size: 0.8rem; opacity: 0.5;">
+      &copy; 2025 Coding Yaar Interior Design. All Rights Reserved.
+    </div>
+  </footer>
+
+  <script>
+    // 1. HAMBURGER MENU
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    function toggleMenu() { 
+      navLinks.classList.toggle('active');
+      hamburger.innerText = navLinks.classList.contains('active') ? '✕' : '☰';
+    }
+    hamburger.onclick = toggleMenu;
+
+    // 2. COUNTER LOGIC
+    let countStarted = false;
+    function startCounter() {
+      const target = 1000;
+      const countEl = document.getElementById('count');
+      let current = 0;
+      const interval = setInterval(() => {
+        current += 20;
+        countEl.innerText = current + "+";
+        if (current >= target) {
+          countEl.innerText = "1,000+";
+          clearInterval(interval);
+        }
+      }, 30);
+    }
+
+    window.onscroll = () => {
+      if (window.scrollY > 200 && !countStarted) {
+        startCounter();
+        countStarted = true;
+      }
+    };
+
+    // 3. CATALOG GENERATION
+    const items = [];
+    for(let i=1; i<=30; i++) {
+      items.push({ id: i, price: `$${(Math.random()*2000+500).toFixed(0)}`, img: `https://picsum.photos/seed/${i+20}/400/300` });
+    }
+    const grid = document.getElementById('grid');
+    const loadBtn = document.getElementById('loadBtn');
+    let visible = 6;
+    function render() {
+      grid.innerHTML = items.slice(0, visible).map(item => `
+        <div class="card">
+          <div class="price">${item.price}</div>
+          <img src="${item.img}">
+          <div class="card-body"><h3>Package #${item.id}</h3><p>Premium materials included.</p></div>
+        </div>
+      `).join('');
+      if(visible >= 30) loadBtn.style.display = 'none';
+    }
+    loadBtn.onclick = () => { visible += 6; render(); };
+    render();
+
+    // 4. THEME
+    document.getElementById('themeToggle').onclick = () => {
+      document.body.classList.toggle('dark');
+      document.getElementById('themeToggle').innerText = document.body.classList.contains('dark') ? '☀️' : '🌙';
+    };
+
+    // 5. MODAL FUNCTIONS
+    function closeModal() {
+      document.getElementById('customAlert').style.display = 'none';
+    }
+
+    // 6. IMPROVED INQUIRY SUBMISSION
+    const form = document.getElementById('inquiryForm');
+    form.onsubmit = async (e) => {
+      e.preventDefault(); // Stop standard redirect
+      
+      // Immediately show your custom modal
+      document.getElementById('customAlert').style.display = 'flex';
+      
+      // Send data to PHP in background
+      const data = new FormData(form);
+      try {
+        await fetch('send_email.php', {
+          method: 'POST',
+          body: data
+        });
+        form.reset();
+      } catch (err) {
+        console.error("Backend error:", err);
+      }
+    };
+  </script>
+</body>
+</html>
